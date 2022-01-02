@@ -59,7 +59,7 @@ class Item {
   }
 
   factory Item.fromMap(Map<String, dynamic> map) {
-    if (map == null) throw NullThrownError;
+    // if (map == null) throw NullThrownError;
     
     return Item(
       id : map['id']?.toInt() ?? 0,

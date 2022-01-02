@@ -40,17 +40,46 @@ class _HomePageState extends State<HomePage> {
         title: Text("Flutter Training"),
       ),
       body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: (CatalogModel.items == null && CatalogModel.items.isNotEmpty)
-              ? ListView.builder(
-                  itemBuilder: (context, index) {
-                    return ItemWidget(item: CatalogModel.items[index]);
-                  },
-                  itemCount: CatalogModel.items.length,
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                )),
+        padding: const EdgeInsets.all(16.0),
+        child: (CatalogModel.items != null && CatalogModel.items.isNotEmpty)
+            ? GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 16,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 16),
+                itemBuilder: (context, index) {
+                  final item = CatalogModel.items[index];
+                  return Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: GridTile(
+                      header: Container(
+                        child: Text(
+                          item.name,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                        ),
+                      ),
+                      child: Image.network(item.image),
+                      footer: Container(
+                        decoration: BoxDecoration(color: Colors.black),
+                        child: Text(
+                          item.price.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  );
+                })
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
       drawer: MyDrawer(),
     );
   }
